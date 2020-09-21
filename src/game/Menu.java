@@ -61,7 +61,7 @@ public class Menu extends MouseAdapter {
 		
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Liberal Destroyer", 285, 100);
+		g.drawString("Test Game", 285, 100);
 		
 		
 		g.setFont(fnt2);
