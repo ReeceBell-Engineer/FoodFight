@@ -5,22 +5,27 @@ import java.awt.Rectangle;
 
 public class Bullet extends GameObject {
 	
+	
+	
+	
+	private Handler handler;
+
 	public Bullet(int x, int y, ID id, Handler handler, int mx, int my) {
 		super(x, y, id);
+		this.handler = handler;
+		
+		velX = (mx - x) / 12;
+		velY = (my - y) / 12;
 		
 		
-		//velX = (mx - x) / 12;
-		//velY = (my - y) / 12;
-		
-		velX = x / 12;
-		velY = y / 12;
 		
 		
 	}
 
 
 	public void tick() {
-		
+		x += velX;
+		y += velY;
 		
 	}
 	
