@@ -29,7 +29,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public Game() {
 		new Window(1000, 563, "Test Game", this);
-		
+
+
 
 		start();
 		
