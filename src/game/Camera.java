@@ -2,10 +2,11 @@ package game;
 
 public class Camera {
 
-	private float x, y;
+	private static float x;
+	private float y;
 	
 	public Camera(float x, float y) {
-		this.x = x;
+		Camera.x = x;
 		this.y = y;
 		
 	}
@@ -20,15 +21,15 @@ public class Camera {
 		if(y <= 0) y = 0;
 		if(y >= 618) y = 618;
 		
-		
+
 	}
 
-	public float getX() {
-		return x;
+	public static float getX() {
+		return Camera.x;
 	}
 
 	public void setX(float x) {
-		this.x = x;
+		Camera.x = x;
 	}
 
 	public float getY() {

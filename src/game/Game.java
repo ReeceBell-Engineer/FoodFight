@@ -111,12 +111,9 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-		
 	}
 	
 
-
-	
 	//loading level
 	
 	private synchronized void loadLevel(BufferedImage image) {
@@ -170,8 +167,8 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(Color.red);
 			g.fillRect(0,0,1000,563);
 			
-			g2d.translate(-camera.getX(), -camera.getY());
-			g2d.translate(camera.getX(), camera.getY());
+			
+			
 			
 			
 			g.setColor(Color.gray);
@@ -203,9 +200,9 @@ public class Game extends Canvas implements Runnable {
 			g.fillRect(100, 100, 100, 63);
 			Menu.render(g);
 		}
-		
+		g2d.translate(-Camera.getX(), -camera.getY());
 		handler.render(g);
-		
+		g2d.translate(Camera.getX(), camera.getY());
 		
 		////////////////////////////////////////////
 		g.dispose();
@@ -213,6 +210,9 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public static void main(String args[]) {
+		
 		new Game();
+		
+		
 	}
 }	

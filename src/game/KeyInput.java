@@ -22,6 +22,9 @@ public class KeyInput extends KeyAdapter {
 				if(key == KeyEvent.VK_S)handler.setDown(true);
 				if(key == KeyEvent.VK_A)handler.setLeft(true);
 				if(key == KeyEvent.VK_D)handler.setRight(true);
+				
+				System.out.println("X value" + Camera.getX());
+				//System.out.println("Y value" + object.getY());
 			}
 		}
 		
