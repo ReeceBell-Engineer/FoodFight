@@ -19,10 +19,10 @@ public class Menu extends MouseAdapter {
 		int mx = e.getX();
 		int my = e.getY();
 		
-		//if(mouseOver(mx, my, 400, 150, 200, 32)) {
-			//game.gameState = STATE.Game;
+		if(mouseOver(mx, my, 400, 150, 200, 32)) {
+			game.gameState = STATE.Game;
 			
-		//}
+		}
 	}
 	
 

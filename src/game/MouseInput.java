@@ -1,6 +1,4 @@
 package game;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -44,15 +42,25 @@ public class MouseInput extends MouseAdapter {
 		}
 		
 		
-		
-		if(mouseOver(mx, my, 400, 150, 200, 32)) {
-			game.gameState = STATE.Game;
+		if (game.gameState == STATE.Menu) {
+			if(mouseOver(mx, my, 400, 150, 200, 32)) {
+				game.gameState = STATE.Game;
+			}
+	
+			
+			if(mouseOver(mx, my, 400, 250, 200, 32)) {
+				System.exit(0);
+			}
 		}
+		
+		if (game.gameState == STATE.Game) {
+			if(mouseOver(mx, my, 875, 30, 100, 32)) {
+				game.gameState = STATE.Menu;
+			}
 
-		
-		if(mouseOver(mx, my, 400, 250, 200, 32)) {
-			System.exit(0);
 		}
+		
+		
 	}
 	
 }

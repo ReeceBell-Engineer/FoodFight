@@ -29,16 +29,19 @@ public class Game extends Canvas implements Runnable {
 	
 	public Game() {
 		new Window(1000, 563, "Zombie Game", this);
+		
+
 		start();
 		
-		handler = new Handler();
 		camera = new Camera(0,0);
-		menu = new Menu(this, handler);
+		handler = new Handler();
+		
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(new MouseInput(handler, camera, menu, this));
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
-		level = loader.loadImage("/Zombie_Level1.png");
+		level = loader.loadImage("/test_level.png");
+		
 		
 		
 		if(gameState == STATE.Game) {
@@ -46,7 +49,7 @@ public class Game extends Canvas implements Runnable {
 			
 		} else {
 			gameState = STATE.Menu;
-			
+			menu = new Menu(this, handler);
 		}
 		
 	}
@@ -75,6 +78,7 @@ public class Game extends Canvas implements Runnable {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		int frames = 0;
 		while(isRunning) {
 			long now = System.nanoTime();
@@ -127,10 +131,6 @@ public class Game extends Canvas implements Runnable {
 			g.fillRect(0,0,1000,563);
 			
 			g2d.translate(-camera.getX(), -camera.getY());
-	
-			handler.render(g);
-			
-			
 			g2d.translate(camera.getX(), camera.getY());
 			
 			
@@ -152,18 +152,23 @@ public class Game extends Canvas implements Runnable {
 			g.drawRect(875, 30, 100, 32);
 			g.drawString("Back", 920, 45);
 			
-		} else if (gameState == STATE.Menu){
-			//g.setColor(Color.black);
-		    //g.fillRect(0,0,1000,563);
 			
-			//g.setColor(Color.red);
-			//g.fillRect(100, 100, 100, 63);
+			
+			
+		} else if (gameState == STATE.Menu){
+			g.setColor(Color.black);
+		    g.fillRect(0,0,1000,563);
+			
+			g.setColor(Color.red);
+			g.fillRect(100, 100, 100, 63);
 			Menu.render(g);
 		}
 		
-		////////////////////////////////////////////
 		g.dispose();
 		bs.show();
+		
+		////////////////////////////////////////////
+		handler.render(g);
 	}
 	
 	//loading level
@@ -178,6 +183,7 @@ public class Game extends Canvas implements Runnable {
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
+				@SuppressWarnings("unused")
 				int pink = (pixel) & 0xff;
 				
 				if(red == 255)
