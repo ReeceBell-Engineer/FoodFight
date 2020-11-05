@@ -14,7 +14,7 @@ public class MouseInput extends MouseAdapter {
 	public MouseInput (Handler handler, Camera camera, Menu menu, Game game) {
 		this.handler = handler;
 		this.camera = camera;
-		this.menu = menu;
+		this.setMenu(menu);
 		this.game = game;
 		
 	}
@@ -61,6 +61,12 @@ public class MouseInput extends MouseAdapter {
 		}
 		
 		
+	}
+	public Menu getMenu() {
+		return menu;
+	}
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 	
 }

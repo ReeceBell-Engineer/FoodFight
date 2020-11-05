@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 	public Menu menu;
 	/////////////////////////////////////////////////
 	
-	public STATE gameState = STATE.Menu;
+	public STATE gameState = STATE.Game;
 	////////////////////////////////////////////////////
 	
 	public Game() {
@@ -36,41 +36,43 @@ public class Game extends Canvas implements Runnable {
 		camera = new Camera(0,0);
 		handler = new Handler();
 		
+		
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(new MouseInput(handler, camera, menu, this));
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
-		level = loader.loadImage("/test_level.png");
+		level = loader.loadImage("/test_Level.png");
 		
-		
+
 		
 		if(gameState == STATE.Game) {
+			
 			loadLevel(level);
 			
-		} else {
-			gameState = STATE.Menu;
+		} else if (gameState == STATE.Menu) {
 			menu = new Menu(this, handler);
 		}
 		
 	}
 
-	private void start() {
+	private synchronized void start() {
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
 	}
 	
-	private void stop() {
+	private synchronized void stop() {
 		isRunning = false;
 		try {
 			thread.join();
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			System.out.println("stack trace");
 		}
 	}
 	
-	public void run () {
+	 public void run () {
 		
 		this.requestFocus();
 		long lastTime = System.nanoTime();
@@ -84,7 +86,7 @@ public class Game extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while(delta >= 1) {
+			while (delta >= 1) {
 				tick();
 				delta--;
 			}
@@ -112,7 +114,45 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 	
-	public void render() {
+
+
+	
+	//loading level
+	
+	private void loadLevel(BufferedImage image) {
+		int w = image.getWidth();
+		int h = image.getHeight();
+		
+		for(int xx = 0; xx < w; xx++) {
+			for(int yy = 0; yy < h; yy++) {
+				int pixel = image.getRGB(xx,  yy);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+				@SuppressWarnings("unused")
+				int pink = (pixel) & 0xff;
+				
+				if(red == 255)
+					handler.addObject(new Block( xx*32, yy*32, ID.Block));
+				
+				if(blue == 255 && green == 0)
+					handler.addObject(new Player( xx*32, yy*32, ID.Player, handler, this));
+				
+				if(green == 255 && blue == 0)
+					handler.addObject(new Enemy_1( xx*32, yy*32, ID.Enemy_1, handler, this));
+				
+				if(green == 255 && blue == 255 && red == 0)
+					handler.addObject(new AmmoCrate( xx*32, yy*32, ID.AmmoCrate));
+				
+				if(green == 0 && blue == 50 && red == 200)
+					handler.addObject(new HealthBox( xx*32, yy*32, ID.HealthBox));
+				
+			
+			}
+		}
+	}
+	
+	public synchronized void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
 			this.createBufferStrategy(3);
@@ -164,50 +204,12 @@ public class Game extends Canvas implements Runnable {
 			Menu.render(g);
 		}
 		
-		g.dispose();
-		bs.show();
+		handler.render(g);
+		
 		
 		////////////////////////////////////////////
-		handler.render(g);
-	}
-	
-	//loading level
-	
-	private void loadLevel(BufferedImage image) {
-		int w = image.getWidth();
-		int h = image.getHeight();
-		
-		for(int xx = 0; xx < w; xx++) {
-			for(int yy = 0; yy < h; yy++) {
-				int pixel = image.getRGB(xx,  yy);
-				int red = (pixel >> 16) & 0xff;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
-				@SuppressWarnings("unused")
-				int pink = (pixel) & 0xff;
-				
-				if(red == 255)
-					handler.addObject(new Block( xx*32, yy*32, ID.Block));
-				
-				if(blue == 255 && green == 0)
-					handler.addObject(new Player( xx*32, yy*32, ID.Player, handler, this));
-				
-				if(green == 255 && blue == 0)
-					handler.addObject(new Enemy_1( xx*32, yy*32, ID.Enemy_1, handler, this));
-				
-				if(green == 255 && blue == 255 && red == 0)
-					handler.addObject(new AmmoCrate( xx*32, yy*32, ID.AmmoCrate));
-				
-				if(green == 0 && blue == 50 && red == 200)
-					handler.addObject(new HealthBox( xx*32, yy*32, ID.HealthBox));
-				
-			
-			}
-		
-		
-		
-		
-		}
+		g.dispose();
+		bs.show();
 	}
 	
 	public static void main(String args[]) {
