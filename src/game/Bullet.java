@@ -4,22 +4,17 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Bullet extends GameObject {
-	
-	
-	
-	
+
 	private Handler handler;
 
 	public Bullet(int x, int y, ID id, Handler handler, int mx, int my) {
 		super(x, y, id);
-		this.handler = handler;
+		this.setHandler(handler);
 		
 		velX = (mx - x) / 12;
 		velY = (my - y) / 12;
 		
-		
-		
-		
+
 	}
 
 
@@ -37,6 +32,16 @@ public class Bullet extends GameObject {
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 8, 8);
+	}
+
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
 	}
 
 }

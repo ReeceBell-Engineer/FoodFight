@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	////////////////////////////////////////////////////
 	
 	public Game() {
-		new Window(1000, 563, "Zombie Game", this);
+		new Window(1000, 563, "Test Game", this);
 		
 
 		start();
@@ -119,7 +119,7 @@ public class Game extends Canvas implements Runnable {
 	
 	//loading level
 	
-	private void loadLevel(BufferedImage image) {
+	private synchronized void loadLevel(BufferedImage image) {
 		int w = image.getWidth();
 		int h = image.getHeight();
 		
