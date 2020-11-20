@@ -40,7 +40,7 @@ public class Enemy_1 extends GameObject {
 					velY = (r.nextInt(4 - -4) + -4);
 				}
 			}
-			
+
 			if(tempObject.getId() == ID.Bullet) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					hp -= 50;
@@ -76,7 +76,7 @@ public class Enemy_1 extends GameObject {
 		
 	}
 	public Rectangle getBoundsBig() {
-		return new Rectangle(x-16, y-16, 64, 64);
+		return new Rectangle(x-8, y-8, 48, 48);
 	}
 
 }

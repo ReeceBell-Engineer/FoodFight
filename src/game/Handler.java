@@ -8,7 +8,7 @@ public class Handler {
 	
 	private boolean up = false, down = false, right = false, left = false;
 
-	public void tick() {
+	public synchronized void tick() {
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
 			

@@ -21,7 +21,7 @@ public class Bullet extends GameObject {
 	public void tick() {
 		x += velX;
 		y += velY;
-		
+
 	}
 	
 

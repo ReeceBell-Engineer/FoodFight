@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(new MouseInput(handler, camera, menu, this));
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
-		level = loader.loadImage("/test_Level.png");
+		level = loader.loadImage("/Zombie_Level1.png");
 		
 
 		
@@ -164,14 +164,9 @@ public class Game extends Canvas implements Runnable {
 		
 		if(gameState == STATE.Game) {
 			
-		
 			g.setColor(Color.red);
 			g.fillRect(0,0,1000,563);
-			
-			
-			
-			
-			
+
 			g.setColor(Color.gray);
 			g.fillRect(5, 5, 200, 32);
 			g.setColor(Color.green);
@@ -204,7 +199,6 @@ public class Game extends Canvas implements Runnable {
 		g2d.translate(-Camera.getX(), -camera.getY());
 		handler.render(g);
 		g2d.translate(Camera.getX(), camera.getY());
-		
 		////////////////////////////////////////////
 		g.dispose();
 		bs.show();

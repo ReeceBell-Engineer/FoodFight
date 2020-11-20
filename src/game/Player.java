@@ -15,7 +15,7 @@ public class Player extends GameObject {
 		this.game = game;
 	}
 
-	public void tick() {
+	public synchronized void tick() {
 		x += velX;
 		y += velY;
 		
@@ -25,7 +25,6 @@ public class Player extends GameObject {
 		//movement
 		if(handler.isUp()) velY = -5;
 		else if(!handler.isDown())velY = 0;
-		
 		if(handler.isDown()) velY = 5;
 		else if(!handler.isUp())velY = 0; 
 		
@@ -37,7 +36,7 @@ public class Player extends GameObject {
 		
 	}
 	
-	private void collision() {
+	private synchronized void collision() {
 		
 		for(int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
@@ -50,6 +49,9 @@ public class Player extends GameObject {
 				}
 			}
 			
+
+
+			
 			if(tempObject.getId() == ID.AmmoCrate) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					game.ammo += 10;
@@ -59,6 +61,7 @@ public class Player extends GameObject {
 			
 			if(tempObject.getId() == ID.Enemy_1) {
 				if(getBounds().intersects(tempObject.getBounds())) {
+
 					game.hp--;
 				}
 			}
@@ -75,10 +78,8 @@ public class Player extends GameObject {
 						handler.removeObject(tempObject);
 							
 					}
-					
 				}
 			}
-			
 		}
 	}
 
