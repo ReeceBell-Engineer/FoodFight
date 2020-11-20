@@ -2,6 +2,8 @@ package game;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+
 public class MouseInput extends MouseAdapter {
 
 	
@@ -45,6 +47,9 @@ public class MouseInput extends MouseAdapter {
 		if (game.gameState == STATE.Menu) {
 			if(mouseOver(mx, my, 400, 150, 200, 32)) {
 				game.gameState = STATE.Game;
+				
+				Thread gameTimerThread = new Thread(new GameTimer()); // GameTimer thread
+				gameTimerThread.start(); // gameTimerThread started
 			}
 	
 			
@@ -56,6 +61,8 @@ public class MouseInput extends MouseAdapter {
 		if (game.gameState == STATE.Game) {
 			if(mouseOver(mx, my, 875, 30, 100, 32)) {
 				game.gameState = STATE.Menu;
+				
+
 			}
 
 		}
