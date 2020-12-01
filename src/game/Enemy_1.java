@@ -17,7 +17,7 @@ public class Enemy_1 extends GameObject {
 	public Enemy_1(int x, int y, ID id, Handler handler, Game game) {
 		super(x, y, id);
 		this.handler = handler;
-		this.game = game;
+		this.setGame(game);
 	}
 
 	public void tick() {
@@ -53,7 +53,7 @@ public class Enemy_1 extends GameObject {
 		
 		if(hp <= 0) {
 			handler.removeObject(this);
-			game.enemies--;
+			HUD.enemies--;
 		}
 		
 		
@@ -77,6 +77,14 @@ public class Enemy_1 extends GameObject {
 	}
 	public Rectangle getBoundsBig() {
 		return new Rectangle(x-8, y-8, 48, 48);
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 }

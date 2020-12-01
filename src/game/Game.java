@@ -10,56 +10,82 @@ public class Game extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private boolean isRunning = false;
+	public static int WIDTH = 1000;
+	public static int HEIGHT = 800;
+	public String title = "Food Fight";
+	
 	private Thread thread;
+	private boolean isRunning = false;
+	
+	// instances
 	private Handler handler;
-	private Camera camera;
-	static BufferedImage level = null;
+	private KeyInput input;
+	private Pause pause;
+	private Camera cam;
 	
 	
-	public int ammo = 100;
-	public int hp = 100;
-	// add number of enemies
-	public int enemies = 28;
 	public Menu menu;
+	public Level1 level1;
+	public HUD hud;
+	
+	private BufferedImage level = null;
+	
 	/////////////////////////////////////////////////
 	
-	public STATE gameState = STATE.Game;
+	public STATE gameState = STATE.Menu;
 	////////////////////////////////////////////////////
 	
 	public Game() {
-		new Window(1000, 563, "Test Game", this);
-
-
-
+		
+		new Window(WIDTH, HEIGHT, title, this);
 		start();
+
+		init();
 		
-		camera = new Camera(0,0);
+	}
+	
+	private void init() {
 		handler = new Handler();
-		
-		
-		this.addKeyListener(new KeyInput(handler));
-		this.addMouseListener(new MouseInput(handler, camera, menu, this));
+		input = new KeyInput();
+		cam = new Camera(0,0);
+
+		this.addKeyListener(input);
+
+		this.addMouseListener(new MouseInput(handler, cam, menu, level1, pause, this));
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level = loader.loadImage("/Zombie_Level1.png");
-		
+	
 
+		//TODO figure out a way to load the level on new game
 		
-		if(gameState == STATE.Game) {
-			
-			loadLevel(level);
-			
-		} else if (gameState == STATE.Menu) {
-			menu = new Menu(this, handler);
-		}
+		// if (gameState == STATE.Level1) {
+		//  	loadLevel(level);
+		//}
+		loadLevel(level);
 		
+		
+		// was trying to work out a way to pause the game timer and resume
+//		if (gameState == STATE.Pause) {
+//			try {
+//				thread.wait();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (gameState == STATE.Level1) {
+//				thread.notify();
+//			}
+//				
+//		}
 	}
 
 	private synchronized void start() {
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
+		
+		
 	}
 	
 	private synchronized void stop() {
@@ -106,7 +132,7 @@ public class Game extends Canvas implements Runnable {
 		
 		for(int i = 0; i < handler.object.size(); i++) {
 			if(handler.object.get(i).getId() == ID.Player) {
-				camera.tick(handler.object.get(i));
+				cam.tick(handler.object.get(i));
 			}
 		}
 		
@@ -115,7 +141,54 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 
-	//loading level
+
+	
+	public synchronized void render() {
+		
+		BufferStrategy bs = this.getBufferStrategy();
+		if(bs == null) {
+			this.createBufferStrategy(3);
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) g;
+		
+		///////////////////////////////////////////
+		if(gameState == STATE.Menu) {
+			
+			Menu.render(g);
+		
+			
+			
+		}else if(gameState == STATE.Level1) {
+			
+			g.setColor(Color.red);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			HUD.render(g);
+	
+			
+		}
+		
+		
+		else if (gameState == STATE.Pause) {
+			
+			Pause.render(g);
+		
+		}
+		////////////////////////////////////////////
+		g2d.translate(-cam.getX(), -cam.getY());
+		handler.render(g);
+		g2d.translate(cam.getX(), cam.getY());
+		
+		
+		bs.show();
+		g.dispose();
+	}
+	
+	
+	//loading level	
 	
 	private synchronized void loadLevel(BufferedImage image) {
 		int w = image.getWidth();
@@ -127,14 +200,13 @@ public class Game extends Canvas implements Runnable {
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
-				@SuppressWarnings("unused")
-				int pink = (pixel) & 0xff;
+				// int pink = (pixel) & 0xff;
 				
 				if(red == 255)
 					handler.addObject(new Block( xx*32, yy*32, ID.Block));
 				
 				if(blue == 255 && green == 0)
-					handler.addObject(new Player( xx*32, yy*32, ID.Player, handler, this));
+					handler.addObject(new Player( xx*32, yy*32, ID.Player, input, handler, this));
 				
 				if(green == 255 && blue == 0)
 					handler.addObject(new Enemy_1( xx*32, yy*32, ID.Enemy_1, handler, this));
@@ -150,59 +222,7 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
-	public synchronized void render() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null) {
-			this.createBufferStrategy(3);
-			return;
-		}
-		
-		Graphics g = bs.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D) g;
-		///////////////////////////////////////////
-		
-		
-		if(gameState == STATE.Game) {
-			
-			g.setColor(Color.red);
-			g.fillRect(0,0,1000,563);
 
-			g.setColor(Color.gray);
-			g.fillRect(5, 5, 200, 32);
-			g.setColor(Color.green);
-			g.fillRect(5, 5, hp*2, 32);
-			g.setColor(Color.black);
-			g.drawRect(5, 5, 200, 32);
-			
-			
-			g.setColor(Color.white);
-			g.drawString("Ammo: " + ammo, 4, 50);
-			
-			g.setColor(Color.white);
-			g.drawString("Enemies: " + enemies, 4, 60);
-			
-			g.setColor(Color.white);
-			g.drawRect(875, 30, 100, 32);
-			g.drawString("Back", 920, 45);
-			
-			
-			
-			
-		} else if (gameState == STATE.Menu){
-			g.setColor(Color.black);
-		    g.fillRect(0,0,1000,563);
-			
-			g.setColor(Color.red);
-			g.fillRect(100, 100, 100, 63);
-			Menu.render(g);
-		}
-		g2d.translate(-Camera.getX(), -camera.getY());
-		handler.render(g);
-		g2d.translate(Camera.getX(), camera.getY());
-		////////////////////////////////////////////
-		g.dispose();
-		bs.show();
-	}
 	
 	public static void main(String args[]) {
 		

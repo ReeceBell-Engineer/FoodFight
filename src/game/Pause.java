@@ -7,20 +7,27 @@ import java.awt.event.MouseEvent;
 
 
 
-public class Menu extends MouseAdapter {
+public class Pause extends MouseAdapter {
 
 	
 	private Game game;
-	public Menu(Game game, Handler handler) {
+	
+	
+	public Pause(Game game, Handler handler) {
 		this.setGame(game);
+	
 	}
 	
 	public void mousePressed(MouseEvent e) {
 //		int mx = e.getX();
 //		int my = e.getY();
 		
-//		if(mouseOver(mx, my, 400, 150, 200, 32)) {
+//		if(mouseOver(mx, my, Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32)) {
 //			game.gameState = STATE.Level1;
+//			
+//		}
+//		if(mouseOver(mx, my, Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32)) {
+//			game.gameState = STATE.Menu;
 //			
 //		}
 	}
@@ -51,7 +58,7 @@ public class Menu extends MouseAdapter {
 		
 		
 		// menu background
-		g.setColor(Color.black);
+		g.setColor(Color.gray);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
 		
 		
@@ -61,21 +68,18 @@ public class Menu extends MouseAdapter {
 		
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Test Game", 285, 100);
+		g.drawString("Paused", Game.WIDTH/2 - 75, Game.HEIGHT/2 - 300);
 		
 		
 		g.setFont(fnt2);
 		g.setColor(Color.red);
-		g.drawRect(400, 150, 200, 32);
+		g.drawRect(Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32);
 		g.drawString("Play", 470, 175);
 		
 		g.setColor(Color.red);
-		g.drawRect(400, 200, 200, 32);
-		g.drawString("Help", 470, 225);
-		
-		g.setColor(Color.red);
-		g.drawRect(400, 250, 200, 32);
-		g.drawString("Quit", 470, 275);
+		g.drawRect(Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32);
+		g.drawString("Menu", 470, 225);
+
 		
 	}
 
@@ -86,4 +90,5 @@ public class Menu extends MouseAdapter {
 	public void setGame(Game game) {
 		this.game = game;
 	}
+
 }	
