@@ -4,7 +4,8 @@ public enum STATE {
 	Menu,
 	Level1,
 	HUD,
-	End,
 	Pause,
+	GameOver,
+	Win,
 	Game
 };

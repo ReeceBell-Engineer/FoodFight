@@ -11,19 +11,20 @@ public class Menu extends MouseAdapter {
 
 	
 	private Game game;
+	
+	
 	public Menu(Game game, Handler handler) {
 		this.setGame(game);
 	}
 	
-	public void mousePressed(MouseEvent e) {
+//	public void mousePressed(MouseEvent e) {
 //		int mx = e.getX();
 //		int my = e.getY();
-		
+//
 //		if(mouseOver(mx, my, 400, 150, 200, 32)) {
 //			game.gameState = STATE.Level1;
-//			
 //		}
-	}
+//	}
 	
 
 

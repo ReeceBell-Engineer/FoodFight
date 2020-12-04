@@ -29,9 +29,9 @@ public class Enemy_1 extends GameObject {
 			GameObject tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ID.Block) {
-				if(getBoundsBig().intersects(tempObject.getBounds())) {
-					x += (velX) * -3;
-					y += (velY) * -3;
+				if(getBounds().intersects(tempObject.getBounds())) {
+					x += (velX) * -2;
+					y += (velY) * -2;
 					
 					velX *= -1;
 					velY *= -1;
@@ -41,11 +41,13 @@ public class Enemy_1 extends GameObject {
 				}
 			}
 
+
 			if(tempObject.getId() == ID.Bullet) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					hp -= 50;
 					
 					handler.removeObject(tempObject);
+					
 					
 				}
 			}	
@@ -54,6 +56,18 @@ public class Enemy_1 extends GameObject {
 		if(hp <= 0) {
 			handler.removeObject(this);
 			HUD.enemies--;
+
+			System.out.println("you have killed a bad guy!!!");
+		}
+		if(HUD.enemies <= 0) {
+			
+			System.out.println("you have killed a bad guy!!!");
+			
+			game.gameState = STATE.Win;
+			
+			HUD.enemies = 28;
+
+			
 		}
 		
 		

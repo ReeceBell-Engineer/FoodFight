@@ -14,9 +14,9 @@ public class Game extends Canvas implements Runnable {
 	public static int HEIGHT = 800;
 	public String title = "Food Fight";
 	
-	private Thread thread;
-	private boolean isRunning = false;
-	
+	Thread thread;
+	boolean isRunning = false;
+	private BufferedImage levelImage = null;
 	// instances
 	private Handler handler;
 	private KeyInput input;
@@ -25,44 +25,57 @@ public class Game extends Canvas implements Runnable {
 	
 	
 	public Menu menu;
-	public Level1 level1;
+	public Level1 level;
 	public HUD hud;
 	
-	private BufferedImage level = null;
+	
+	
 	
 	/////////////////////////////////////////////////
 	
 	public STATE gameState = STATE.Menu;
 	////////////////////////////////////////////////////
+
+	public boolean isPaused = false;
 	
 	public Game() {
 		
 		new Window(WIDTH, HEIGHT, title, this);
 		start();
-
+	
 		init();
 		
 	}
 	
 	private void init() {
+		
+
 		handler = new Handler();
 		input = new KeyInput();
 		cam = new Camera(0,0);
+		menu = new Menu(this, handler);
 
 		this.addKeyListener(input);
 
-		this.addMouseListener(new MouseInput(handler, cam, menu, level1, pause, this));
+		this.addMouseListener(new MouseInput(handler, cam, menu, level, pause, this));
 		
-		BufferedImageLoader loader = new BufferedImageLoader();
-		level = loader.loadImage("/Zombie_Level1.png");
-	
 
-		//TODO figure out a way to load the level on new game
+		BufferedImageLoader loader = new BufferedImageLoader();
+		levelImage = loader.loadImage("/FoodFight.png");
+		
+		loadLevel(levelImage);
+		
+		
+		
+		//TODO figure out a way to load the level on new game. Not working
 		
 		// if (gameState == STATE.Level1) {
 		//  	loadLevel(level);
 		//}
-		loadLevel(level);
+		
+		//if(gameState == STATE.Level1) {
+			//loadLevel(level);
+		//}
 		
 		
 		// was trying to work out a way to pause the game timer and resume
@@ -88,7 +101,7 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 	
-	private synchronized void stop() {
+	synchronized void stop() {
 		isRunning = false;
 		try {
 			thread.join();
@@ -99,7 +112,10 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
+
+	
 	 public void run () {
+		 
 		
 		this.requestFocus();
 		long lastTime = System.nanoTime();
@@ -109,6 +125,7 @@ public class Game extends Canvas implements Runnable {
 		long timer = System.currentTimeMillis();
 		@SuppressWarnings("unused")
 		int frames = 0;
+		
 		while(isRunning) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
@@ -124,10 +141,14 @@ public class Game extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
-		stop();
 		
+		 
+		stop();
+		 
 	}
 	
+
+
 	public void tick() {
 		
 		for(int i = 0; i < handler.object.size(); i++) {
@@ -135,9 +156,15 @@ public class Game extends Canvas implements Runnable {
 				cam.tick(handler.object.get(i));
 			}
 		}
+
 		
 		handler.tick();
 		
+// checking game state for debugging purposes
+//		if(gameState == STATE.Menu) System.out.println("Game STATE = Menu");
+//		else if(gameState == STATE.Level1) System.out.println("Game STATE = Level1");
+//		else if(gameState == STATE.Pause) System.out.println("Game STATE = Pause");
+//		else if(gameState == STATE.GameOver) System.out.println("Game STATE = GameOver");
 	}
 	
 
@@ -155,14 +182,17 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		///////////////////////////////////////////
+
+		
 		if(gameState == STATE.Menu) {
 			
 			Menu.render(g);
-		
 			
+			g.dispose();
 			
-		}else if(gameState == STATE.Level1) {
-			
+		}
+		else if(gameState == STATE.Level1) {
+
 			g.setColor(Color.red);
 			g.fillRect(0, 0, WIDTH, HEIGHT);
 			
@@ -170,11 +200,22 @@ public class Game extends Canvas implements Runnable {
 	
 			
 		}
-		
-		
 		else if (gameState == STATE.Pause) {
 			
 			Pause.render(g);
+			g.dispose();
+		
+		} 
+		else if (gameState == STATE.GameOver) {
+			
+			GameOver.render(g);
+			g.dispose();
+		
+		}
+		else if (gameState == STATE.Win) {
+			
+			Win.render(g);
+			g.dispose();
 		
 		}
 		////////////////////////////////////////////
@@ -227,7 +268,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]) {
 		
 		new Game();
-		
+
 		
 	}
 }	

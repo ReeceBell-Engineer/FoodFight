@@ -10,8 +10,8 @@ public class MouseInput extends MouseAdapter {
 	private Handler handler;
 	private Camera cam;
 	private Game game;
-	private Menu menu;
-	private Level1 level;
+	 Menu menu;
+	Level1 level;
 	private GameObject tempPlayer = null;
 	
 	
@@ -21,8 +21,8 @@ public class MouseInput extends MouseAdapter {
 	public MouseInput (Handler handler, Camera cam, Menu menu, Level1 level, Pause pause, Game game) {
 		this.handler = handler;
 		this.cam = cam;
-		this.setMenu(menu);
-		this.setLevel(level);
+		this.menu = menu;
+		this.level = level;
 		this.game = game;
 		
 	}
@@ -56,12 +56,14 @@ public class MouseInput extends MouseAdapter {
 			GameObject tempBullet = handler.addObject(new Bullet(tempPlayer.x + 16, tempPlayer.y + 16, ID.Bullet, handler, my, my));
 			
 			float angle = (float) Math.atan2(my - tempPlayer.y - 16 + cam.getY(), mx - tempPlayer.x - 16 + cam.getX());
-			int bulletVel = 20;
+			int bulletVel = 10;
 			
 			tempBullet.velX = (float) ((bulletVel) * Math.cos(angle));
 			tempBullet.velY = (float) ((bulletVel) * Math.sin(angle));
 			
 			HUD.ammo --;
+			
+			System.out.println("You have fired a pie!!!!");
 			}
 			
 		
@@ -71,38 +73,72 @@ public class MouseInput extends MouseAdapter {
 		
 		
 		if (game.gameState == STATE.Menu) {
+			
+			
+			// new game button
 			if(mouseOver(mx, my, 400, 150, 200, 32)) {
+				
 				game.gameState = STATE.Level1;
 				
+				
+				
 				if( gameTimerThread.isAlive()) {
-					System.out.println("gameTimerThread is running");
+					System.out.println("gameTimerThread is running after Level1 starts");
 				}else gameTimerThread.start();
-				//gameTimerThread.notify();
-				 // GameTimer thread
-				//gameTimerThread.start(); // gameTimerThread started
+				
+				System.out.println("New game pressed from main menu");
+				
+				// print current STATE
+				System.out.println("gameState = Level1");
 			} 
 	
-			
+			// exit game button
 			if(mouseOver(mx, my, 400, 250, 200, 32)) {
+			
+				System.out.println("exiting game from main menu");
+				
 				System.exit(0);
+				
 			}
 		}
 		
 		if (game.gameState == STATE.Level1) {
+			
+			
+
+			
 
 			//g.drawRect(875, 30, 100, 32);
 			
 			if(mouseOver(mx, my, Game. WIDTH - 120 , Game.HEIGHT - 775, 100, 32)) {
 				game.gameState = STATE.Pause;
 				
+			
+				System.out.println("Pause Button pressed from Level1");
+				
 				//Thread gameTimerThread = new Thread(new GameTimer()); // GameTimer thread
 				//gameTimerThread.start(); // gameTimerThread started
-				GameTimer.stop();
-
+				//GameTimer.stop();
 			}
 
 		}
 		if (game.gameState == STATE.Pause) {
+			
+			if(mouseOver(mx, my, Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32)) {
+				game.gameState = STATE.Level1;
+				
+			}
+			if(mouseOver(mx, my, Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32)) {
+				game.gameState = STATE.Menu;
+
+				
+			}
+		
+		}
+		else if (game.gameState == STATE.GameOver) {
+			
+			HUD.hp = 100;
+			
 			if(mouseOver(mx, my, Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32)) {
 				game.gameState = STATE.Level1;
 				
@@ -110,21 +146,39 @@ public class MouseInput extends MouseAdapter {
 			if(mouseOver(mx, my, Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32)) {
 				game.gameState = STATE.Menu;
 				
+				
+			}
+		
+		}
+		else if (game.gameState == STATE.Win) {
+			
+			HUD.hp = 100;
+			
+			if(mouseOver(mx, my, Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 200, 200, 32)) {
+				game.gameState = STATE.Level1;
+				
+				
+				
+			}
+			if(mouseOver(mx, my, Game.WIDTH/2 - 100, Game.HEIGHT/2 - 150, 200, 32)) {
+				game.gameState = STATE.Menu;
+				
+				
 			}
 		
 		}
 	}
-	public Menu getMenu() {
-		return menu;
-	}
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-	public Level1 getLevel() {
-		return level;
-	}
-	public void setLevel(Level1 level) {
-		this.level = level;
-	}
+//	public Menu getMenu() {
+//		return menu;
+//	}
+//	public void setMenu(Menu menu) {
+//		this.menu = menu;
+//	}
+//	public Level1 getLevel() {
+//		return level;
+//	}
+//	public void setLevel(Level1 level) {
+//		this.level = level;
+//	}
 	
 }

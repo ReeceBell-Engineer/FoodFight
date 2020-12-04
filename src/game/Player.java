@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 public class Player extends GameObject {
 
 	
-	
+	private int playerSpeed = 4;
 	private float _acc = 1f;
 	private float _dcc = 0.5f;
 	private KeyInput input;
@@ -53,8 +53,14 @@ public class Player extends GameObject {
 			else if(velY < 0) velY += _dcc;
 		}
 		
-		velX = clamp(velX, 6, -6);
-		velY = clamp(velY, 6, -6);
+		if (HUD.hp <= 0) {
+			game.gameState = STATE.GameOver;
+		}
+		
+		// speed of player movement
+		
+		velX = clamp(velX, playerSpeed, - playerSpeed);
+		velY = clamp(velY, playerSpeed, - playerSpeed);
 	}
 	
 	private float clamp(float value, float max, float min) {
@@ -76,16 +82,17 @@ public class Player extends GameObject {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					x += velX * -1;
 					y += velY * -1;
+					
+					System.out.println("You hit a wall!");
 				}
 			}
-			
 
 
-			
 			if(tempObject.getId() == ID.AmmoCrate) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					HUD.ammo += 10;
 					handler.removeObject(tempObject);
+					System.out.println("You got some ammo!");
 				}
 			}
 			
@@ -99,15 +106,21 @@ public class Player extends GameObject {
 			if(tempObject.getId() == ID.HealthBox) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					
-					if(HUD.hp < 100) {
+					if(HUD.hp < 100 ) {
 						
-						for(int z = 0; z < 5; z++) {
+						if (HUD.hp > 90) {
 							
-							HUD.hp += z;
+							int hpPlus = 100 - HUD.hp;
+							
+							HUD.hp += hpPlus;
+						} else {
+							
+							HUD.hp += 10;
 						}
 						handler.removeObject(tempObject);
+						System.out.println("You got some health back!");
 							
-					}
+					} 
 				}
 			}
 		}
@@ -116,14 +129,14 @@ public class Player extends GameObject {
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setColor(Color.blue);
-		g.fillRect((int)x, (int)y, 32, 32);
+		g.fillRect((int)x, (int)y, 32, 48);
 		
 	}
 
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
-		return new Rectangle(x, y, 32, 32);
+		return new Rectangle(x + 2, y + 2, 28, 44);
 	}
 
 

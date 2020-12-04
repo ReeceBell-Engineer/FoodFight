@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -41,8 +40,8 @@ public class Level1 {
 		
 
 		
-		g.setColor(Color.red);
-		g.fillRect(0,0,Game.WIDTH,Game.HEIGHT);
+//		g.setColor(Color.red);
+//		g.fillRect(0,0,Game.WIDTH,Game.HEIGHT);
 //
 //		g.setColor(Color.gray);
 //		g.fillRect(5, 5, 200, 32);

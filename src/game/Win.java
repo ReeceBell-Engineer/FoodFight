@@ -1,19 +1,18 @@
 package game;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-
-public class Pause extends MouseAdapter {
+public class Win extends MouseAdapter {
 
 	
-	private Game game;
+	Game game;
+	static String finalTime = GameTimer.finalGT;
 	
-	
-	public Pause(Game game, Handler handler) {
+	public Win(Game game, Handler handler) {
 		this.setGame(game);
 	
 	}
@@ -51,14 +50,14 @@ public class Pause extends MouseAdapter {
 	
 	
 	public void tick() {
-		GameTimer.stop();
+		
 	}
 	
 	public static void render(Graphics g) {
 		
 		
 		// menu background
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
 		
 		
@@ -68,19 +67,19 @@ public class Pause extends MouseAdapter {
 		
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Paused", Game.WIDTH/2 - 75, Game.HEIGHT/2 - 300);
+		g.drawString("You WIN!!!!!!!", Game.WIDTH/2 - 150, Game.HEIGHT/2 - 300);
 		
 		
 		g.setFont(fnt2);
 		g.setColor(Color.red);
-		g.drawRect(Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32);
-		g.drawString("Play", 470, 175);
+		g.drawRect(Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 200, 200, 32);
+		g.drawString("New Game", 425, 225);
 		
 		g.setColor(Color.red);
-		g.drawRect(Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32);
-		g.drawString("Menu", 470, 225);
+		g.drawRect(Game.WIDTH/2 - 100, Game.HEIGHT/2 - 150, 200, 32);
+		g.drawString("Quit", 470, 275);
 
-		
+		g.drawString("Game Time: " + finalTime , Game.WIDTH/2 - 175, Game.HEIGHT/2);
 	}
 
 	public Game getGame() {

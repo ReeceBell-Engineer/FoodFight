@@ -5,8 +5,13 @@ import java.text.SimpleDateFormat;
 
 
 public class GameTimer implements Runnable {
+	
+	
+	public static String finalGT = "";
 	private volatile static boolean exit = false;
 	private static boolean isRunning = false;
+	Game game;
+	
 	
 	
 	static long startTime = System.currentTimeMillis();
@@ -14,20 +19,26 @@ public class GameTimer implements Runnable {
 
 	public void run() {
 
-		
+		isRunning = true;
 			
 		while(!exit) {
 			long now = System.currentTimeMillis();
 			long elapsedTime = (now - startTime) - (16 * oneHour);
-			DateFormat df = new SimpleDateFormat("HH:mm:ss");
-			System.out.println("Your current game time is " + df.format(elapsedTime));
+			DateFormat df = new SimpleDateFormat("mm:ss:SS");
+			
+			if(isRunning) {
+				//System.out.println("Your current game time is " + df.format(elapsedTime));
+				finalGT = df.format(elapsedTime);
+			}
+			finalGT = df.format(elapsedTime);
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 
 	
@@ -39,18 +50,20 @@ public class GameTimer implements Runnable {
 	public static void stop() {
 		exit = true;
 		
-
+		isRunning = false;
 		
 		long GameTime = System.currentTimeMillis() - startTime;
 		long elapsedTime = (GameTime) - (16 * oneHour);
 		DateFormat df = new SimpleDateFormat("HH:mm:ss:SS");
 		
-		System.out.println("Your current game is paused");
-		System.out.println("Your current game time is " + df.format(elapsedTime));
+		if(!isRunning) {
+			System.out.println("Your current game is paused");
+			System.out.println("Your current game time is " + df.format(elapsedTime));
+	
+			finalGT = df.format(elapsedTime);
+			System.out.println("Your survival game time is " + finalGT);
 
-		
-
-		
+		}
 	}
 
 
@@ -62,9 +75,7 @@ public class GameTimer implements Runnable {
 	public static void setisRunning(boolean isRunning) {
 		GameTimer.isRunning = isRunning;
 	}
-
-
-
+	
 }
 
 
