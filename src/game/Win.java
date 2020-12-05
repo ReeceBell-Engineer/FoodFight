@@ -14,6 +14,10 @@ public class Win extends MouseAdapter {
 	
 	public Win(Game game, Handler handler) {
 		this.setGame(game);
+		
+		HUD.ammo = 100;
+		HUD.enemies = 26;
+		HUD.hp = 100;
 	
 	}
 	

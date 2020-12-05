@@ -27,6 +27,7 @@ public class Game extends Canvas implements Runnable {
 	public Menu menu;
 	public Level1 level;
 	public HUD hud;
+	public Help help;
 	
 	
 	
@@ -54,10 +55,11 @@ public class Game extends Canvas implements Runnable {
 		input = new KeyInput();
 		cam = new Camera(0,0);
 		menu = new Menu(this, handler);
+		help = new Help(this, handler);
 
 		this.addKeyListener(input);
 
-		this.addMouseListener(new MouseInput(handler, cam, menu, level, pause, this));
+		this.addMouseListener(new MouseInput(handler, cam, menu, help, level, pause, this));
 		
 
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -188,6 +190,15 @@ public class Game extends Canvas implements Runnable {
 			
 			Menu.render(g);
 			
+			g.dispose();
+			
+		}
+		else if(gameState == STATE.Help) {
+
+			//g.setColor(Color.red);
+			//g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			Help.render(g);
 			g.dispose();
 			
 		}

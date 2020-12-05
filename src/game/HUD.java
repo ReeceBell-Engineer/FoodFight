@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 public class HUD{
 	public static int ammo = 100;
-	public static int enemies = 28;
+	public static int enemies = 26;
 	public static int hp = 100;
 	
 	GameTimer gt;

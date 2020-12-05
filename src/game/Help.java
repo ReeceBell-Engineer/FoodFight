@@ -6,33 +6,24 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class GameOver extends MouseAdapter {
+public class Help extends MouseAdapter {
 
 	
-	Game game;
-	static String finalTime = GameTimer.finalGT;
+	private Game game;
 	
-
 	
-	public GameOver(Game game, Handler handler) {
+	public Help(Game game, Handler handler) {
 		this.setGame(game);
-
-	
 	}
 	
-	public void mousePressed(MouseEvent e) {
+//	public void mousePressed(MouseEvent e) {
 //		int mx = e.getX();
 //		int my = e.getY();
-		
-//		if(mouseOver(mx, my, Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32)) {
+//
+//		if(mouseOver(mx, my, 400, 150, 200, 32)) {
 //			game.gameState = STATE.Level1;
-//			
 //		}
-//		if(mouseOver(mx, my, Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32)) {
-//			game.gameState = STATE.Menu;
-//			
-//		}
-	}
+//	}
 	
 
 
@@ -60,7 +51,7 @@ public class GameOver extends MouseAdapter {
 		
 		
 		// menu background
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
 		
 		
@@ -70,19 +61,29 @@ public class GameOver extends MouseAdapter {
 		
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Game Over", Game.WIDTH/2 - 125, Game.HEIGHT/2 - 300);
+		g.drawString("Controls", 400, 100);
 		
 		
 		g.setFont(fnt2);
 		g.setColor(Color.red);
-		g.drawRect(Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32);
-		g.drawString("New Game", 425, 175);
+		g.drawString("Press W to move up", 370, 175);
 		
 		g.setColor(Color.red);
-		g.drawRect(Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32);
-		g.drawString("Quit", 470, 225);
-
-		g.drawString("" + finalTime , Game.WIDTH/2 - 75, Game.HEIGHT/2);
+		g.drawString("Press A to move left", 370, 225);
+		
+		g.setColor(Color.red);
+		g.drawString("Press D to move right", 370, 275);
+		
+		g.setColor(Color.red);
+		g.drawString("Press S to move down", 370, 325);
+		
+		g.setColor(Color.red);
+		g.drawString("Use left or right mouse button to fire food from your spork", 100, 375);
+		
+		g.setColor(Color.red);
+		g.drawRect(400, 450, 200, 32);
+		g.drawString("Back", 470, 475);
+		
 	}
 
 	public Game getGame() {
@@ -92,5 +93,4 @@ public class GameOver extends MouseAdapter {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-
 }	

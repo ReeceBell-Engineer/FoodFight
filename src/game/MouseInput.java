@@ -10,6 +10,7 @@ public class MouseInput extends MouseAdapter {
 	private Handler handler;
 	private Camera cam;
 	private Game game;
+	Help help;
 	 Menu menu;
 	Level1 level;
 	private GameObject tempPlayer = null;
@@ -18,12 +19,14 @@ public class MouseInput extends MouseAdapter {
 	Thread gameTimerThread = new Thread(new GameTimer());
 	
 	
-	public MouseInput (Handler handler, Camera cam, Menu menu, Level1 level, Pause pause, Game game) {
+	public MouseInput (Handler handler, Camera cam, Menu menu,Help help, Level1 level, Pause pause, Game game) {
 		this.handler = handler;
 		this.cam = cam;
 		this.menu = menu;
+		this.help = help;
 		this.level = level;
 		this.game = game;
+		
 		
 	}
 	private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
@@ -49,6 +52,8 @@ public class MouseInput extends MouseAdapter {
 		int mx = e.getX();
 		int my = e.getY();
 		
+		if (game.gameState == STATE.Level1) {
+		
 		
 		if(tempPlayer != null) {
 			
@@ -71,7 +76,7 @@ public class MouseInput extends MouseAdapter {
 			
 		} else findPlayer();
 		
-		
+		}
 		if (game.gameState == STATE.Menu) {
 			
 			
@@ -91,6 +96,18 @@ public class MouseInput extends MouseAdapter {
 				// print current STATE
 				System.out.println("gameState = Level1");
 			} 
+			if(mouseOver(mx, my, 400, 200, 200, 32)) {
+				
+				game.gameState = STATE.Help;
+				
+				
+
+				
+				System.out.println("Help pressed from main menu");
+				
+				// print current STATE
+				System.out.println("gameState = Help");
+			} 
 	
 			// exit game button
 			if(mouseOver(mx, my, 400, 250, 200, 32)) {
@@ -100,6 +117,25 @@ public class MouseInput extends MouseAdapter {
 				System.exit(0);
 				
 			}
+		}
+		if (game.gameState == STATE.Help) {
+			
+			
+			// new game button
+			if(mouseOver(mx, my, 400, 450, 200, 32)) {
+				
+				game.gameState = STATE.Menu;
+				
+				
+
+				
+				System.out.println("back to main menu from help");
+				
+				// print current STATE
+				System.out.println("gameState = Menu");
+			} 
+	
+	
 		}
 		
 		if (game.gameState == STATE.Level1) {

@@ -62,7 +62,7 @@ public class Menu extends MouseAdapter {
 		
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		g.drawString("Test Game", 285, 100);
+		g.drawString("Food Fight !", 365, 100);
 		
 		
 		g.setFont(fnt2);
