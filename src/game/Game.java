@@ -15,8 +15,14 @@ public class Game extends Canvas implements Runnable {
 	public String title = "Food Fight";
 	
 	Thread thread;
+	
+	private SpriteSheet ss;
 	boolean isRunning = false;
 	private BufferedImage levelImage = null;
+	private BufferedImage sprite_sheet = null;
+	private BufferedImage floor = null;
+	
+	
 	// instances
 	private Handler handler;
 	private KeyInput input;
@@ -59,11 +65,19 @@ public class Game extends Canvas implements Runnable {
 
 		this.addKeyListener(input);
 
-		this.addMouseListener(new MouseInput(handler, cam, menu, help, level, pause, this));
 		
 
 		BufferedImageLoader loader = new BufferedImageLoader();
 		levelImage = loader.loadImage("/FoodFight.png");
+		
+		sprite_sheet = loader.loadImage("/sprite_sheet.png");
+		
+		ss = new SpriteSheet(sprite_sheet);
+		
+		this.addMouseListener(new MouseInput(handler, cam, menu, help, level, pause, this, ss));
+
+		
+		floor = ss.grabImage(4, 2, 32, 32);
 		
 		loadLevel(levelImage);
 		
@@ -204,8 +218,14 @@ public class Game extends Canvas implements Runnable {
 		}
 		else if(gameState == STATE.Level1) {
 
-			g.setColor(Color.red);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
+			//g.setColor(Color.red);
+			//g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			 for(int xx = 0; xx < 30*72; xx+=32 ) {
+				 for(int yy = 0; yy < 30*72; yy+=32) {
+					 g.drawImage(floor, xx, yy, null);
+				 }
+			 }
 			
 			HUD.render(g);
 	
@@ -229,6 +249,9 @@ public class Game extends Canvas implements Runnable {
 			g.dispose();
 		
 		}
+		
+
+		
 		////////////////////////////////////////////
 		g2d.translate(-cam.getX(), -cam.getY());
 		handler.render(g);
@@ -254,20 +277,20 @@ public class Game extends Canvas implements Runnable {
 				int blue = (pixel) & 0xff;
 				// int pink = (pixel) & 0xff;
 				
-				if(red == 255)
-					handler.addObject(new Block( xx*32, yy*32, ID.Block));
+				if(red == 255 && blue == 0  && green == 0)
+					handler.addObject(new Block( xx*32, yy*32, ID.Block, ss));
 				
-				if(blue == 255 && green == 0)
-					handler.addObject(new Player( xx*32, yy*32, ID.Player, input, handler, this));
+				if(blue == 255 && green == 0 && red == 0)
+					handler.addObject(new Player( xx*32, yy*32, ID.Player, input, handler, this, ss));
 				
 				if(green == 255 && blue == 0)
-					handler.addObject(new Enemy_1( xx*32, yy*32, ID.Enemy_1, handler, this));
+					handler.addObject(new Enemy_1( xx*32, yy*32, ID.Enemy_1, handler, this, ss));
 				
 				if(green == 255 && blue == 255 && red == 0)
-					handler.addObject(new AmmoCrate( xx*32, yy*32, ID.AmmoCrate));
+					handler.addObject(new AmmoCrate( xx*32, yy*32, ID.AmmoCrate, ss));
 				
 				if(green == 0 && blue == 50 && red == 200)
-					handler.addObject(new HealthBox( xx*32, yy*32, ID.HealthBox));
+					handler.addObject(new HealthBox( xx*32, yy*32, ID.HealthBox, ss));
 				
 			
 			}

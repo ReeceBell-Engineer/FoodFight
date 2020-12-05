@@ -13,19 +13,21 @@ public class MouseInput extends MouseAdapter {
 	Help help;
 	 Menu menu;
 	Level1 level;
+	private SpriteSheet ss;
 	private GameObject tempPlayer = null;
 	
 	
 	Thread gameTimerThread = new Thread(new GameTimer());
 	
 	
-	public MouseInput (Handler handler, Camera cam, Menu menu,Help help, Level1 level, Pause pause, Game game) {
+	public MouseInput (Handler handler, Camera cam, Menu menu,Help help, Level1 level, Pause pause, Game game, SpriteSheet ss) {
 		this.handler = handler;
 		this.cam = cam;
 		this.menu = menu;
 		this.help = help;
 		this.level = level;
 		this.game = game;
+		this.ss = ss;
 		
 		
 	}
@@ -58,7 +60,7 @@ public class MouseInput extends MouseAdapter {
 		if(tempPlayer != null) {
 			
 			if (HUD.ammo > 0) {
-			GameObject tempBullet = handler.addObject(new Bullet(tempPlayer.x + 16, tempPlayer.y + 16, ID.Bullet, handler, my, my));
+			GameObject tempBullet = handler.addObject(new Bullet(tempPlayer.x + 16, tempPlayer.y + 16, ID.Bullet, handler, my, my, ss));
 			
 			float angle = (float) Math.atan2(my - tempPlayer.y - 16 + cam.getY(), mx - tempPlayer.x - 16 + cam.getX());
 			int bulletVel = 10;

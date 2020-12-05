@@ -28,27 +28,37 @@ public class HUD{
 		
 		
 		//Ammo count
+		
+		g.setColor(Color.blue);
+		g.fillRect(Game.WIDTH/2 - 495, Game.HEIGHT/2 - 360, 130, 60);
 		g.setFont(fnt);
-		g.setColor(Color.white);
-		g.drawString("Ammo: " + ammo, 4, 60);
+		g.setColor(Color.yellow);
+		g.drawString("Ammo: " + ammo, 10, 60);
 		
 		
 		// TODO enemies left. hard coded. would be nice to dynamically change based on enemies objects actually loaded
-		g.setColor(Color.white);
-		g.drawString("Enemies: " + enemies, 4, 90);
+		g.setColor(Color.orange);
+		g.drawString("Enemies: " + enemies, 10, 90);
 		
 		
 		//back - pause button
+		g.setColor(Color.blue);
+		//g.drawRect(875, 30, 100, 32);
+		g.fillRect(Game. WIDTH - 120 , Game.HEIGHT - 775, 100, 32);
 		g.setFont(fnt);
 		g.setColor(Color.white);
-		//g.drawRect(875, 30, 100, 32);
-		g.drawRect(Game. WIDTH - 120 , Game.HEIGHT - 775, 100, 32);
-		g.drawString("Back", 920, 45);
+		g.drawString("Back", 910, 45);
 		
 		// GameTimer
+		
+		g.setColor(Color.blue);
+		g.fillRect(Game.WIDTH/2 - 125, Game.HEIGHT/2 - 365, 200, 30);
+		
 		g.setFont(fnt2);
+		g.setColor(Color.white);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		g.drawString("" + GameTimer.finalGT , Game.WIDTH/2 - 75, Game.HEIGHT/2 - 340);
+
 		
 		
 	}

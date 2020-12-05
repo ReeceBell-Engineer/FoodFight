@@ -7,8 +7,8 @@ public class Bullet extends GameObject {
 
 	private Handler handler;
 
-	public Bullet(int x, int y, ID id, Handler handler, int mx, int my) {
-		super(x, y, id);
+	public Bullet(int x, int y, ID id, Handler handler, int mx, int my, SpriteSheet ss) {
+		super(x, y, id, ss);
 		this.setHandler(handler);
 		
 		velX = (mx - x) / 12;
@@ -38,8 +38,10 @@ public class Bullet extends GameObject {
 	
 
 	public void render(Graphics g) {
-		g.setColor(Color.green);
-		g.fillOval(x, y, 8, 8);
+		final Color Brown = new Color(102, 51, 0);
+		
+		g.setColor(Brown);
+		g.fillOval(x, y, 12, 16);
 	}
 
 	public Rectangle getBounds() {

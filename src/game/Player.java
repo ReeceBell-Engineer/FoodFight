@@ -2,6 +2,7 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Player extends GameObject {
 
@@ -13,12 +14,16 @@ public class Player extends GameObject {
 	Handler handler;
 	Game game;
 	
-	public Player(int x, int y, ID id, KeyInput input, Handler handler, Game game) {
-		super(x, y, id);
+	private BufferedImage player_image;
+	
+	public Player(int x, int y, ID id, KeyInput input, Handler handler, Game game, SpriteSheet ss) {
+		super(x, y, id, ss);
 		// TODO Auto-generated constructor stub
 		this.handler = handler;
 		this.game = game;
 		this.input = input;
+		
+		player_image = ss.grabImage(1, 1, 32, 48);
 	}
 
 
@@ -128,8 +133,7 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(Color.blue);
-		g.fillRect((int)x, (int)y, 32, 48);
+		g.drawImage(player_image, x, y, null);
 		
 	}
 

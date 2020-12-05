@@ -58,7 +58,7 @@ public class Pause extends MouseAdapter {
 		
 		
 		// menu background
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
 		
 		

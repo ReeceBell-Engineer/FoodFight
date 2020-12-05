@@ -2,11 +2,16 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class HealthBox extends GameObject {
 
-	public HealthBox(int x, int y, ID id) {
-		super(x, y, id);
+private BufferedImage health_image;
+	
+	public HealthBox(int x, int y, ID id, SpriteSheet ss) {
+		super(x, y, id, ss);
+		
+		health_image = ss.grabImage(3, 1, 32, 32);
 	}
 
 	public void tick() {
@@ -14,8 +19,7 @@ public class HealthBox extends GameObject {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.pink);
-		g.fillRect(x, y, 32, 32);
+		g.drawImage(health_image, x, y, null);
 	}
 
 	public Rectangle getBounds() {
