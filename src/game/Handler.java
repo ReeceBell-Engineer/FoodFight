@@ -2,10 +2,12 @@ package game;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+// this handles the adding and removal of objects
+// method learned from RealTutGML tutorials
+
 public class Handler {
 	
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
-	
 	
 	public synchronized void tick() {
 		for(int i = 0; i < object.size(); i++) {

@@ -1,6 +1,5 @@
 package game;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -22,26 +21,25 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage sprite_sheet = null;
 	private BufferedImage floor = null;
 	
-	
 	// instances
 	private Handler handler;
 	private KeyInput input;
 	private Pause pause;
 	private Camera cam;
 	
-	
 	public Menu menu;
 	public Level1 level;
 	public HUD hud;
 	public Help help;
-	
-	
-	
-	
+
 	/////////////////////////////////////////////////
-	
+	// This is the STATE that the game starts in when the Game is called.
 	public STATE gameState = STATE.Menu;
 	////////////////////////////////////////////////////
+	
+	// We still get this error and haven't been able to figure out how to fix it.
+	// it occurs randomly and freezes the game movement but not the mouse listener or timer.
+	// Exception in thread "Thread-0" java.lang.IndexOutOfBoundsException:
 
 	public boolean isPaused = false;
 	
@@ -49,13 +47,11 @@ public class Game extends Canvas implements Runnable {
 		
 		new Window(WIDTH, HEIGHT, title, this);
 		start();
-	
 		init();
 		
 	}
 	
 	private void init() {
-		
 
 		handler = new Handler();
 		input = new KeyInput();
@@ -65,29 +61,19 @@ public class Game extends Canvas implements Runnable {
 
 		this.addKeyListener(input);
 
-		
-
 		BufferedImageLoader loader = new BufferedImageLoader();
-		levelImage = loader.loadImage("/FoodFight.png");
-		
+		levelImage = loader.loadImage("/FoodFight.png");	
 		sprite_sheet = loader.loadImage("/sprite_sheet.png");
 		
 		ss = new SpriteSheet(sprite_sheet);
 		
 		this.addMouseListener(new MouseInput(handler, cam, menu, help, level, pause, this, ss));
 
-		
 		floor = ss.grabImage(4, 2, 32, 32);
 		
 		loadLevel(levelImage);
 		
-		
-		
 		//TODO figure out a way to load the level on new game. Not working
-		
-		// if (gameState == STATE.Level1) {
-		//  	loadLevel(level);
-		//}
 		
 		//if(gameState == STATE.Level1) {
 			//loadLevel(level);
@@ -114,7 +100,6 @@ public class Game extends Canvas implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 		
-		
 	}
 	
 	synchronized void stop() {
@@ -129,10 +114,9 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 
-	
+	// this game loop is a common one used and credited to the original developer of Minecraft
 	 public void run () {
 		 
-		
 		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
@@ -157,14 +141,11 @@ public class Game extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
-		
 		 
 		stop();
 		 
 	}
 	
-
-
 	public void tick() {
 		
 		for(int i = 0; i < handler.object.size(); i++) {
@@ -173,7 +154,6 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 
-		
 		handler.tick();
 		
 // checking game state for debugging purposes
@@ -182,10 +162,7 @@ public class Game extends Canvas implements Runnable {
 //		else if(gameState == STATE.Pause) System.out.println("Game STATE = Pause");
 //		else if(gameState == STATE.GameOver) System.out.println("Game STATE = GameOver");
 	}
-	
 
-
-	
 	public synchronized void render() {
 		
 		BufferStrategy bs = this.getBufferStrategy();
@@ -199,7 +176,8 @@ public class Game extends Canvas implements Runnable {
 		
 		///////////////////////////////////////////
 
-		
+		// There is still an issue we cannot figure out with the overlapping of the game map
+		// over the HUD.
 		if(gameState == STATE.Menu) {
 			
 			Menu.render(g);
@@ -229,7 +207,6 @@ public class Game extends Canvas implements Runnable {
 			
 			HUD.render(g);
 	
-			
 		}
 		else if (gameState == STATE.Pause) {
 			
@@ -249,9 +226,7 @@ public class Game extends Canvas implements Runnable {
 			g.dispose();
 		
 		}
-		
 
-		
 		////////////////////////////////////////////
 		g2d.translate(-cam.getX(), -cam.getY());
 		handler.render(g);
@@ -263,7 +238,8 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	
-	//loading level	
+	//loading level
+	// method of assigning game objects to color pallette from a .png was learned from RealTutsGML
 	
 	private synchronized void loadLevel(BufferedImage image) {
 		int w = image.getWidth();
@@ -292,17 +268,13 @@ public class Game extends Canvas implements Runnable {
 				if(green == 0 && blue == 50 && red == 200)
 					handler.addObject(new HealthBox( xx*32, yy*32, ID.HealthBox, ss));
 				
-			
 			}
 		}
 	}
-	
 
-	
 	public static void main(String args[]) {
 		
 		new Game();
 
-		
 	}
 }	

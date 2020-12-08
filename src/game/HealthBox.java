@@ -1,8 +1,9 @@
 package game;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+// this renders a potion image that gives the player an amount of health.
 
 public class HealthBox extends GameObject {
 

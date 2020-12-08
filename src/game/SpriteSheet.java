@@ -1,6 +1,8 @@
 package game;
 import java.awt.image.BufferedImage;
 
+// sprite sheet provided by Esther Song
+
 public class SpriteSheet {
 
 	private BufferedImage image;	
@@ -14,5 +16,4 @@ public class SpriteSheet {
 		return image.getSubimage((col*32)-32, (row*32)-32, width, height);
 		
 	}
-	
 }

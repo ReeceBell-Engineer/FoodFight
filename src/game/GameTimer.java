@@ -3,17 +3,16 @@ package game;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+// this is a time that keeps a running clock of the time the game is playing.
+// Reece Bell did this.
 
 public class GameTimer implements Runnable {
-	
 	
 	public static String finalGT = "";
 	private volatile static boolean exit = false;
 	private static boolean isRunning = false;
 	Game game;
-	
-	
-	
+
 	static long startTime = System.currentTimeMillis();
 	static int oneHour = (1000 * 60 * 60);
 
@@ -38,14 +37,11 @@ public class GameTimer implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 
-	
 		return;
 	
 	}
-
 	
 	public static void stop() {
 		exit = true;
@@ -66,16 +62,13 @@ public class GameTimer implements Runnable {
 		}
 	}
 
-
 	public static boolean isRunning() {
 		return isRunning;
 	}
 
-
 	public static void setisRunning(boolean isRunning) {
 		GameTimer.isRunning = isRunning;
 	}
-	
 }
 
 

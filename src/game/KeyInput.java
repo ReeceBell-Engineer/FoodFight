@@ -2,10 +2,13 @@ package game;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+// Player key input is handled here. Method was learned from RealTutsGML
+// this is the second way that player movement was made and this seems to
+// be much better.
+
 public class KeyInput extends KeyAdapter {
 	
 	public boolean keys[] = new boolean[4];
-	
 	
 	public void keyPressed(KeyEvent e) {	
 		

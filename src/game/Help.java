@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// this is a help menu that gives player instructions
+
 public class Help extends MouseAdapter {
 
-	
 	private Game game;
-	
 	
 	public Help(Game game, Handler handler) {
 		this.setGame(game);
@@ -24,8 +24,6 @@ public class Help extends MouseAdapter {
 //			game.gameState = STATE.Level1;
 //		}
 //	}
-	
-
 
 	public void mouseReleased(MouseEvent e) {
 		
@@ -41,14 +39,11 @@ public class Help extends MouseAdapter {
 //		}else return false;
 //	}
 	
-	
-	
 	public void tick() {
 		
 	}
 	
 	public static void render(Graphics g) {
-		
 		
 		// menu background
 		g.setColor(Color.black);

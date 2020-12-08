@@ -1,8 +1,9 @@
 package game;
 
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
+
+// pretty standard class to open a JFrame window
 
 public class Window {
 
@@ -21,6 +22,4 @@ public class Window {
 		frame.setVisible(true);
 		
 	}
-	
-	
 }

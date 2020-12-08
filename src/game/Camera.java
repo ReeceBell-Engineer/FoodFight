@@ -1,5 +1,7 @@
 package game;
 
+// This is the camera that changes the view of the game dependent on what it is assigned to.
+
 public class Camera {
 
 	private float x;
@@ -19,8 +21,7 @@ public class Camera {
 		if(x <= 0) x = 0;
 		if(x >= 1055) x = 1055;
 		if(y <= 0) y = 0;
-		if(y >= 1288) y = 1288;
-		
+		if(y >= 1288) y = 1288;	
 
 	}
 
@@ -39,6 +40,4 @@ public class Camera {
 	public void setY(float y) {
 		this.y = y;
 	}
-	
-	
 }

@@ -5,13 +5,12 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+// This is the pause menu
+// The timer was never able to be paused and resumed
 
 public class Pause extends MouseAdapter {
 
-	
 	private Game game;
-	
 	
 	public Pause(Game game, Handler handler) {
 		this.setGame(game);
@@ -31,8 +30,6 @@ public class Pause extends MouseAdapter {
 //			
 //		}
 	}
-	
-
 
 	public void mouseReleased(MouseEvent e) {
 		
@@ -47,20 +44,16 @@ public class Pause extends MouseAdapter {
 //			}else return false;
 //		}else return false;
 //	}
-	
-	
-	
+
 	public void tick() {
-		GameTimer.stop();
+		//GameTimer.stop();
 	}
 	
 	public static void render(Graphics g) {
 		
-		
 		// menu background
 		g.setColor(Color.black);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
-		
 		
 		// menu
 		Font fnt = new Font("arial", 1, 50);
@@ -70,7 +63,6 @@ public class Pause extends MouseAdapter {
 		g.setColor(Color.white);
 		g.drawString("Paused", Game.WIDTH/2 - 75, Game.HEIGHT/2 - 300);
 		
-		
 		g.setFont(fnt2);
 		g.setColor(Color.red);
 		g.drawRect(Game.WIDTH/2 - 100,  Game.HEIGHT/2 - 250, 200, 32);
@@ -79,7 +71,6 @@ public class Pause extends MouseAdapter {
 		g.setColor(Color.red);
 		g.drawRect(Game.WIDTH/2 - 100, Game.HEIGHT/2 - 200, 200, 32);
 		g.drawString("Menu", 470, 225);
-
 		
 	}
 
@@ -90,5 +81,4 @@ public class Pause extends MouseAdapter {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-
 }	

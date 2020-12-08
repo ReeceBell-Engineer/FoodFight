@@ -2,6 +2,8 @@ package game;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+// Game object are extended to this to acquire its functions
+
 public abstract class GameObject {
 	protected int x, y;
 	protected float velX = 0, velY = 0;

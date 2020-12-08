@@ -6,18 +6,16 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// This displays the STATE for a winning condition. 
+
 public class GameOver extends MouseAdapter {
 
-	
 	Game game;
 	static String finalTime = GameTimer.finalGT;
-	
-
 	
 	public GameOver(Game game, Handler handler) {
 		this.setGame(game);
 
-	
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -33,8 +31,6 @@ public class GameOver extends MouseAdapter {
 //			
 //		}
 	}
-	
-
 
 	public void mouseReleased(MouseEvent e) {
 		
@@ -50,19 +46,15 @@ public class GameOver extends MouseAdapter {
 //		}else return false;
 //	}
 	
-	
-	
 	public void tick() {
 		
 	}
 	
 	public static void render(Graphics g) {
 		
-		
 		// menu background
 		g.setColor(Color.gray);
 		g.fillRect(0,0, Game.WIDTH,Game.HEIGHT);
-		
 		
 		// menu
 		Font fnt = new Font("arial", 1, 50);

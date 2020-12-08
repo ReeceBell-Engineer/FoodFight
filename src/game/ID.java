@@ -1,5 +1,7 @@
 package game;
 
+// this is an enumeration that hold ID's for all game objects
+
 public enum ID {
 
 	Player(),

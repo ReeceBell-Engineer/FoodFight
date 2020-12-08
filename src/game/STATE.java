@@ -1,5 +1,7 @@
 package game;
 
+// enumeration of game STATES
+
 public enum STATE {
 	Menu,
 	Help,
